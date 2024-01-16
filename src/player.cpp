@@ -16,6 +16,10 @@ void Player::render(SDL_Renderer* const renderer,
 	SDL_RenderFillRect(renderer, &rect);
 }
 
+void Player::reset() {
+	x = y = 0;
+}
+
 void Player::processEvent(const SDL_Event* const event,
                           const Mazes::Maze& maze) {
 	switch (event->type) {
@@ -43,6 +47,9 @@ void Player::processEvent(const SDL_Event* const event,
 					    && (maze.at(x, y) & Mazes::RIGHT_WALL) == 0) {
 						x++;
 					}
+					break;
+				case SDL_SCANCODE_R:
+					reset();
 					break;
 				default:
 					break;

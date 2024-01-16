@@ -15,6 +15,8 @@ public:
 	void render(SDL_Renderer* renderer, const TileSettings& ts) const;
 
 	void processEvent(const SDL_Event* event, const Mazes::Maze& maze);
+
+	void reset();
 };
 
 #endif
