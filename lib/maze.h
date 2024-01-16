@@ -4,12 +4,11 @@
 #include <vector>
 
 namespace Mazes {
-	enum Tile {
-		EMPTY       = 0U,
-		RIGHT_WALL  = 0b01U,
-		BOTTOM_WALL = 0b10U,
-		BOTH_WALLS  = 0b11U,
-	};
+	using Tile                 = unsigned;
+	constexpr Tile EMPTY       = 0U;
+	constexpr Tile RIGHT_WALL  = 0b01U;
+	constexpr Tile BOTTOM_WALL = 0b10U;
+	constexpr Tile BOTH_WALLS  = 0b11U;
 
 	class Maze {
 		using Vec = std::vector<Tile>;

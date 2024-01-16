@@ -16,7 +16,7 @@ void Generators::randomMaze(Mazes::Maze& maze) {
 
 	for (int y = 0; y < maze.getHeight(); y++) {
 		for (int x = 0; x < maze.getWidth(); x++) {
-			unsigned tile = Mazes::EMPTY;
+			Mazes::Tile tile = Mazes::EMPTY;
 			if (rand()) {
 				tile |= Mazes::RIGHT_WALL;
 			}
