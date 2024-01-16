@@ -38,7 +38,7 @@ class GameSettings {
 
 	// maze generation
 	Generators::GeneratorAlgo algo = Generators::RANDOM_MAZE;
-	unsigned minChamberSize        = 2;
+	int minChamberSize             = 2;
 
 public:
 	using Flag = unsigned;
@@ -51,6 +51,8 @@ private:
 	Flag flags = 0;
 
 	void menuBar();
+
+	void mazeGenSelect();
 
 public:
 	GameSettings(unsigned w, unsigned h, SDL_Window* window, float ratio);

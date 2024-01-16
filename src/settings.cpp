@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "Generators/generators.h"
 #include "imgui.h"
 #include "maze.h"
 
@@ -85,8 +86,39 @@ void GameSettings::render() {
 				flags |= COLORS_CHANGED;
 			}
 		}
+		if (ImGui::CollapsingHeader("Maze Generation")) {
+			mazeGenSelect();
+		}
 	}
 	ImGui::End();
+}
+
+void GameSettings::mazeGenSelect() {
+	if (ImGui::BeginCombo("Maze Generation Algorithm",
+	                      Generators::algoToString(algo))) {
+		for (int a = Generators::RANDOM_MAZE; a < Generators::ALGO_MAX; a++) {
+			bool selected = a == algo;
+			if (ImGui::Selectable(
+					Generators::algoToString((Generators::GeneratorAlgo)a),
+					selected)) {
+				algo = (Generators::GeneratorAlgo)a;
+			}
+			if (selected) {
+				ImGui::SetItemDefaultFocus();
+			}
+		}
+		ImGui::EndCombo();
+	}
+	switch (algo) {
+		case Generators::RECURSIVE_DIVISION:
+			ImGui::InputInt("Minimum chamber size", &minChamberSize);
+			break;
+		default:
+			break;
+	}
+	if (ImGui::Button("Regenerate Maze")) {
+		flags |= MAZE_REGEN;
+	}
 }
 
 void GameSettings::generateMaze(Maze& maze) const {
@@ -96,6 +128,8 @@ void GameSettings::generateMaze(Maze& maze) const {
 			break;
 		case Generators::RECURSIVE_DIVISION:
 			maze.regenMaze(&Generators::recursiveDivision, minChamberSize);
+			break;
+		default:
 			break;
 	}
 }
