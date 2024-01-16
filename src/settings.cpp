@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "imgui.h"
+#include "maze.h"
 
 void TileSettings::setSize(const unsigned size, const float wall) {
 	tileSize      = size;
@@ -56,6 +57,9 @@ void GameSettings::menuBar() {
 
 	ImGui::BeginMainMenuBar();
 	if (ImGui::BeginMenu("Game")) {
+		if (ImGui::MenuItem("Regenerate Maze")) {
+			flags |= MAZE_REGEN;
+		}
 		if (ImGui::MenuItem("Quit")) {
 			flags |= QUIT_PRESSED;
 		}
@@ -83,4 +87,15 @@ void GameSettings::render() {
 		}
 	}
 	ImGui::End();
+}
+
+void GameSettings::generateMaze(Maze& maze) const {
+	switch (algo) {
+		case Generators::RANDOM_MAZE:
+			maze.regenMaze(&Generators::randomMaze);
+			break;
+		case Generators::RECURSIVE_DIVISION:
+			maze.regenMaze(&Generators::recursiveDivision, minChamberSize);
+			break;
+	}
 }

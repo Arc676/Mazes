@@ -6,6 +6,10 @@
 
 #include <array>
 
+#include "Generators/generators.h"
+
+class Maze;
+
 struct TileSettings {
 	unsigned tileSize;
 	unsigned wallThickness;
@@ -32,11 +36,16 @@ class GameSettings {
 	bool showSettings = false;
 	bool showMenuBar  = false;
 
+	// maze generation
+	Generators::GeneratorAlgo algo = Generators::RANDOM_MAZE;
+	unsigned minChamberSize        = 2;
+
 public:
 	using Flag = unsigned;
 
 	constexpr static Flag QUIT_PRESSED   = 1U << 0U;
 	constexpr static Flag COLORS_CHANGED = 1U << 1U;
+	constexpr static Flag MAZE_REGEN     = 1U << 2U;
 
 private:
 	Flag flags = 0;
@@ -53,6 +62,8 @@ public:
 	[[nodiscard]] unsigned getHeight() const { return mazeHeight; }
 
 	[[nodiscard]] Flag getFlags() const { return flags; }
+
+	void generateMaze(Maze& maze) const;
 
 	void processEvent(const SDL_Event* event);
 

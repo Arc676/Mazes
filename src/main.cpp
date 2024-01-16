@@ -72,6 +72,10 @@ int main() {
 		if ((flags & GameSettings::QUIT_PRESSED) != 0) {
 			break;
 		}
+		if ((flags & GameSettings::MAZE_REGEN) != 0) {
+			player.reset();
+			settings.generateMaze(maze);
+		}
 		ImGui::Render();
 
 		// NOLINTNEXTLINE(*-magic-numbers)
