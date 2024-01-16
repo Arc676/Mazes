@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace Mazes {
-	using Tile                 = unsigned;
+	using Tile                 = unsigned char;
 	constexpr Tile EMPTY       = 0U;
 	constexpr Tile RIGHT_WALL  = 0b01U;
 	constexpr Tile BOTTOM_WALL = 0b10U;
