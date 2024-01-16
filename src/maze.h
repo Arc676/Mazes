@@ -16,6 +16,8 @@ public:
 		: Maze(gs.mazeWidth, gs.mazeHeight) {}
 
 	void render(SDL_Renderer* renderer, const TileSettings& ts) const;
+
+	[[nodiscard]] const Mazes::Maze& getMaze() const { return maze; }
 };
 
 #endif
