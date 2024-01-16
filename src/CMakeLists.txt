@@ -5,6 +5,7 @@ set(SRCS
     )
 add_executable(mazes-bin ${SRCS})
 target_include_directories(mazes-bin PUBLIC
+    ${SRC_LIBMAZES}
     ${imgui_SRC}
     ${imgui_SRC}/backends)
 target_link_libraries(mazes-bin PUBLIC imgui SDL2 mazes)
