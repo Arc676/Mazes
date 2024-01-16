@@ -3,9 +3,15 @@
 
 #include <SDL2/SDL_render.h>
 
+#include "lib/maze.h"
+
 class Maze {
+	Mazes::Maze maze;
+
 public:
-	void render(SDL_Renderer* renderer);
+	Maze(unsigned w, unsigned h);
+
+	void render(SDL_Renderer* renderer, unsigned tileSize) const;
 };
 
 #endif

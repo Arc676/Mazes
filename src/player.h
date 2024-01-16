@@ -8,7 +8,7 @@ class Player {
 	int y = 0;
 
 public:
-	void render(SDL_Renderer* renderer);
+	void render(SDL_Renderer* renderer, unsigned tileSize) const;
 };
 
 #endif

@@ -48,7 +48,7 @@ int main() {
 	SDL_Renderer* renderer = SDL_CreateRenderer(win, -1, flags);
 	initializeUI(win, renderer);
 
-	Maze maze;
+	Maze maze(10, 10);
 	Player player;
 
 	while (true) {
@@ -65,8 +65,8 @@ int main() {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		maze.render(renderer);
-		player.render(renderer);
+		maze.render(renderer, 100);
+		player.render(renderer, 100);
 
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 		SDL_RenderPresent(renderer);
