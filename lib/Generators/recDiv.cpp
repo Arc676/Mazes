@@ -15,7 +15,7 @@ void recursiveDivision(Mazes::Maze& maze, const int minSize,
 	static std::uniform_real_distribution<> randPos(0, 1);
 	// returns a random number in the half-open interval [a, b)
 	static auto rand = [&](unsigned a, unsigned b) -> int {
-		assert(b > a);
+		assert(b >= a);
 		return (int)(randPos(gen) * (b - a) + a);
 	};
 
@@ -36,23 +36,23 @@ void recursiveDivision(Mazes::Maze& maze, const int minSize,
 	const int y0 = bounds.y;
 
 	// lower right corner of chamber
-	const int x1 = bounds.w < 0 ? (int)maze.getWidth() : bounds.w;
-	if (x1 - x0 <= minSize) {
+	const int x1 = bounds.w < 0 ? (int)maze.getWidth() - 1 : bounds.w;
+	if (x1 - x0 < minSize) {
 		return;
 	}
 
-	const int y1 = bounds.h < 0 ? (int)maze.getHeight() : bounds.h;
-	if (y1 - y0 <= minSize) {
+	const int y1 = bounds.h < 0 ? (int)maze.getHeight() - 1 : bounds.h;
+	if (y1 - y0 < minSize) {
 		return;
 	}
 
 	const int wallX = rand(x0, x1 - 1);
 	const int wallY = rand(y0, y1 - 1);
 
-	for (int x = x0; x < x1; x++) {
+	for (int x = x0; x <= x1; x++) {
 		maze.at(x, wallY) |= Mazes::BOTTOM_WALL;
 	}
-	for (int y = y0; y < y1; y++) {
+	for (int y = y0; y <= y1; y++) {
 		maze.at(wallX, y) |= Mazes::RIGHT_WALL;
 	}
 
@@ -63,11 +63,11 @@ void recursiveDivision(Mazes::Maze& maze, const int minSize,
 		maze.at(wallX, gap) &= ~Mazes::RIGHT_WALL;
 	}
 	if (closed != SOUTH) {
-		const int gap = rand(wallY + 1, y1);
+		const int gap = rand(wallY + 1, y1 + 1);
 		maze.at(wallX, gap) &= ~Mazes::RIGHT_WALL;
 	}
 	if (closed != EAST) {
-		const int gap = rand(wallX + 1, x1);
+		const int gap = rand(wallX + 1, x1 + 1);
 		maze.at(gap, wallY) &= ~Mazes::BOTTOM_WALL;
 	}
 	if (closed != WEST) {
@@ -79,13 +79,13 @@ void recursiveDivision(Mazes::Maze& maze, const int minSize,
 	SDL_Rect nw{x0, y0, wallX, wallY};
 	recursiveDivision(maze, minSize, nw);
 
-	SDL_Rect ne{wallX, y0, x1, wallY};
+	SDL_Rect ne{wallX + 1, y0, x1, wallY};
 	recursiveDivision(maze, minSize, ne);
 
-	SDL_Rect sw{x0, wallY, wallX, y1};
+	SDL_Rect sw{x0, wallY + 1, wallX, y1};
 	recursiveDivision(maze, minSize, sw);
 
-	SDL_Rect se{wallX, wallY, x1, y1};
+	SDL_Rect se{wallX + 1, wallY + 1, x1, y1};
 	recursiveDivision(maze, minSize, se);
 }
 

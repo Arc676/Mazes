@@ -16,7 +16,7 @@ namespace Generators {
 
 	void randomMaze(Mazes::Maze& maze);
 
-	void recursiveDivision(Mazes::Maze& maze, int minSize);
+	void recursiveDivision(Mazes::Maze& maze, int minSize = 1);
 }  // namespace Generators
 
 #endif
