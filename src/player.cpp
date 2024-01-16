@@ -33,13 +33,13 @@ void Player::processEvent(const SDL_Event* const event,
 					}
 					break;
 				case SDL_SCANCODE_S:
-					if (y < maze.getHeight()
+					if (y < maze.getHeight() - 1
 					    && (maze.at(x, y) & Mazes::BOTTOM_WALL) == 0) {
 						y++;
 					}
 					break;
 				case SDL_SCANCODE_D:
-					if (x < maze.getWidth()
+					if (x < maze.getWidth() - 1
 					    && (maze.at(x, y) & Mazes::RIGHT_WALL) == 0) {
 						x++;
 					}
