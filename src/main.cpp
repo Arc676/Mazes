@@ -63,10 +63,15 @@ int main() {
 		while (SDL_PollEvent(&event) != 0) {
 			ImGui_ImplSDL2_ProcessEvent(&event);
 			player.processEvent(&event, maze.getMaze());
+			settings.processEvent(&event);
 		}
 
 		newFrame();
-		// TODO: draw UI
+		settings.render();
+		const auto flags = settings.getFlags();
+		if ((flags & GameSettings::QUIT_PRESSED) != 0) {
+			break;
+		}
 		ImGui::Render();
 
 		// NOLINTNEXTLINE(*-magic-numbers)
