@@ -10,18 +10,24 @@ Maze::Maze(unsigned w, unsigned h)
 	Generators::randomMaze(maze);
 }
 
-void Maze::render(SDL_Renderer* const renderer, const unsigned tileSize) const {
+void Maze::render(SDL_Renderer* const renderer, const TileSettings& ts) const {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+	const int tileSize = (int)ts.tileSize;
+	const int pathSize = (int)ts.getHallwayWidth();
+	const int wallSize = (int)ts.wallThickness;
 
 	for (int y = 0; y < maze.getHeight(); y++) {
 		for (int x = 0; x < maze.getWidth(); x++) {
 			auto tile = maze.at(x, y);
 			if ((tile & Mazes::RIGHT_WALL) != 0) {
-				SDL_Rect wall{x * 100 + 90, y * 100, 10, 100};
+				SDL_Rect wall{x * tileSize + pathSize, y * tileSize, wallSize,
+				              tileSize};
 				SDL_RenderFillRect(renderer, &wall);
 			}
 			if ((tile & Mazes::BOTTOM_WALL) != 0) {
-				SDL_Rect wall{x * 100, y * 100 + 90, 100, 10};
+				SDL_Rect wall{x * tileSize, y * tileSize + pathSize, tileSize,
+				              wallSize};
 				SDL_RenderFillRect(renderer, &wall);
 			}
 		}

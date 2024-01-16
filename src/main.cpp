@@ -7,6 +7,7 @@
 #include "imgui_impl_sdlrenderer2.h"
 #include "maze.h"
 #include "player.h"
+#include "src/settings.h"
 
 void initializeUI(SDL_Window* const window, SDL_Renderer* const renderer) {
 	IMGUI_CHECKVERSION();
@@ -48,7 +49,13 @@ int main() {
 	SDL_Renderer* renderer = SDL_CreateRenderer(win, -1, flags);
 	initializeUI(win, renderer);
 
-	Maze maze(10, 10);
+	constexpr unsigned DEFAULT_MAZE_SIZE = 10;
+	constexpr float DEFAULT_WALL_RATIO   = 0.1;
+
+	GameSettings settings{DEFAULT_MAZE_SIZE, DEFAULT_MAZE_SIZE, win,
+	                      DEFAULT_WALL_RATIO};
+
+	Maze maze(settings);
 	Player player;
 
 	while (true) {
@@ -65,8 +72,8 @@ int main() {
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		maze.render(renderer, 100);
-		player.render(renderer, 100);
+		maze.render(renderer, settings.ts);
+		player.render(renderer, settings.ts);
 
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 		SDL_RenderPresent(renderer);
