@@ -9,7 +9,10 @@ namespace Generators {
 	enum GeneratorAlgo {
 		RANDOM_MAZE,
 		RECURSIVE_DIVISION,
+		ALGO_MAX,
 	};
+
+	const char* algoToString(GeneratorAlgo algo);
 
 	void randomMaze(Mazes::Maze& maze);
 

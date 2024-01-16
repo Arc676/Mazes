@@ -1,6 +1,7 @@
 set(SRC_LIBMAZES ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "")
 
 set(SRCS
+    Generators/generators.cpp
     Generators/random.cpp
     Generators/recDiv.cpp
     maze.cpp
