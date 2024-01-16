@@ -22,6 +22,8 @@ namespace Mazes {
 	public:
 		Maze(unsigned w, unsigned h);
 
+		void clear(bool walls = false);
+
 		void resize(unsigned w, unsigned h);
 
 		[[nodiscard]] Tile at(unsigned x, unsigned y) const;

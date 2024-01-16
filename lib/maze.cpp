@@ -1,5 +1,6 @@
 #include "maze.h"
 
+#include <algorithm>
 #include <cstddef>
 
 namespace Mazes {
@@ -11,6 +12,10 @@ namespace Mazes {
 
 	void Maze::alloc() {
 		tiles.resize(static_cast<size_t>(width) * height);
+	}
+
+	void Maze::clear(const bool walls) {
+		std::ranges::fill(tiles, walls ? BOTH_WALLS : EMPTY);
 	}
 
 	void Maze::resize(unsigned w, unsigned h) {

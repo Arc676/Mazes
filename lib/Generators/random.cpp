@@ -14,6 +14,8 @@ void Generators::randomMaze(Mazes::Maze& maze) {
 		return dist(gen) % 2 == 0;
 	};
 
+	maze.clear();
+
 	for (int y = 0; y < maze.getHeight(); y++) {
 		for (int x = 0; x < maze.getWidth(); x++) {
 			Mazes::Tile tile = Mazes::EMPTY;
