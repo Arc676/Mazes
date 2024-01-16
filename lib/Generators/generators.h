@@ -6,10 +6,14 @@
 #include "maze.h"
 
 namespace Generators {
+	enum GeneratorAlgo {
+		RANDOM_MAZE,
+		RECURSIVE_DIVISION,
+	};
+
 	void randomMaze(Mazes::Maze& maze);
 
-	void recursiveDivision(Mazes::Maze& maze, int minSize = 2,
-	                       const SDL_Rect& bounds = {0, 0, -1, -1});
+	void recursiveDivision(Mazes::Maze& maze, int minSize);
 }  // namespace Generators
 
 #endif

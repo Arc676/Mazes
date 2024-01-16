@@ -7,8 +7,8 @@
 #include "maze.h"
 
 // NOLINTNEXTLINE(*recursion)
-void Generators::recursiveDivision(Mazes::Maze& maze, const int minSize,
-                                   const SDL_Rect& bounds) {
+void recursiveDivision(Mazes::Maze& maze, const int minSize,
+                       const SDL_Rect& bounds) {
 	static std::random_device rd;
 	static std::mt19937 gen(rd());
 
@@ -87,4 +87,8 @@ void Generators::recursiveDivision(Mazes::Maze& maze, const int minSize,
 
 	SDL_Rect se{wallX, wallY, x1, y1};
 	recursiveDivision(maze, minSize, se);
+}
+
+void Generators::recursiveDivision(Mazes::Maze& maze, const int minSize) {
+	::recursiveDivision(maze, minSize, {0, 0, -1, -1});
 }
