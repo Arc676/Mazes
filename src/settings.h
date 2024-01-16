@@ -15,12 +15,19 @@ struct TileSettings {
 	[[nodiscard]] unsigned getHallwayWidth() const;
 };
 
-struct GameSettings {
+class GameSettings {
 	unsigned mazeWidth;
 	unsigned mazeHeight;
 	TileSettings ts;
 
+public:
 	GameSettings(unsigned w, unsigned h, SDL_Window* window, float ratio);
+
+	[[nodiscard]] const TileSettings& getTileSettings() const { return ts; }
+
+	[[nodiscard]] unsigned getWidth() const { return mazeWidth; }
+
+	[[nodiscard]] unsigned getHeight() const { return mazeHeight; }
 };
 
 #endif

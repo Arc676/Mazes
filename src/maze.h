@@ -13,7 +13,7 @@ public:
 	Maze(unsigned w, unsigned h);
 
 	explicit Maze(const GameSettings& gs)
-		: Maze(gs.mazeWidth, gs.mazeHeight) {}
+		: Maze(gs.getWidth(), gs.getHeight()) {}
 
 	void render(SDL_Renderer* renderer, const TileSettings& ts) const;
 
