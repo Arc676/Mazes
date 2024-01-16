@@ -1,4 +1,6 @@
 set(SRCS
+    maze.cpp
+    player.cpp
     main.cpp
     )
 add_executable(mazes-bin ${SRCS})

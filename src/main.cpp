@@ -5,6 +5,8 @@
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_sdlrenderer2.h"
+#include "maze.h"
+#include "player.h"
 
 void initializeUI(SDL_Window* const window, SDL_Renderer* const renderer) {
 	IMGUI_CHECKVERSION();
@@ -46,6 +48,9 @@ int main() {
 	SDL_Renderer* renderer = SDL_CreateRenderer(win, -1, flags);
 	initializeUI(win, renderer);
 
+	Maze maze;
+	Player player;
+
 	while (true) {
 		SDL_Event event;
 		while (SDL_PollEvent(&event) != 0) {
@@ -59,6 +64,9 @@ int main() {
 		// NOLINTNEXTLINE(*-magic-numbers)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
+
+		maze.render(renderer);
+		player.render(renderer);
 
 		ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 		SDL_RenderPresent(renderer);
