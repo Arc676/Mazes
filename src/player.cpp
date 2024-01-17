@@ -39,11 +39,15 @@ void Player::render(SDL_Renderer* const renderer,
 	SDL_RenderFillRect(renderer, &rect);
 }
 
-void Player::reset() {
+void Player::reset(bool clearBacktrack) {
 	x = y = 0;
+	if (clearBacktrack) {
+		backtracked.clear();
+	} else {
+		backtracked.insert(backtracked.end(), path.begin() + 1, path.end());
+	}
 	path.clear();
 	path.push_back({0, 0});
-	backtracked.clear();
 }
 
 void Player::trackMove() {
@@ -95,7 +99,7 @@ void Player::processEvent(const SDL_Event* const event,
 					}
 					break;
 				case SDL_SCANCODE_R:
-					reset();
+					reset(false);
 					break;
 				default:
 					break;

@@ -39,7 +39,7 @@ public:
 
 	void processEvent(const SDL_Event* event, const Mazes::Maze& maze);
 
-	void reset();
+	void reset(bool clearBacktrack = true);
 };
 
 #endif
