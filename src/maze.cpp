@@ -33,3 +33,11 @@ void Maze::render(SDL_Renderer* const renderer, const TileSettings& ts) const {
 		}
 	}
 }
+
+bool Maze::resizeMaze(const unsigned w, const unsigned h) {
+	if (w != maze.getWidth() || h != maze.getHeight()) {
+		maze.resize(w, h);
+		return true;
+	}
+	return false;
+}

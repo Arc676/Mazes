@@ -26,6 +26,8 @@ public:
 
 	[[nodiscard]] const Mazes::Maze& getMaze() const { return maze; }
 
+	bool resizeMaze(unsigned w, unsigned h);
+
 	template <typename MazeGen, typename... Args>
 	void regenMaze(MazeGen generator, Args&&... args)
 		requires MazeGenerator<MazeGen, Args...>
