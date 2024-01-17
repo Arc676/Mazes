@@ -75,6 +75,8 @@ public:
 
 	[[nodiscard]] Flag getFlags() const { return flags; }
 
+	void resetFlags() { flags = 0; }
+
 	void generateMaze();
 
 	void processEvent(const SDL_Event* event);

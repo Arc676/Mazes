@@ -51,6 +51,12 @@ void GameSettings::processEvent(const SDL_Event* const event) {
 				case SDL_SCANCODE_LALT:
 					showMenuBar = !showMenuBar;
 					break;
+				case SDL_SCANCODE_SPACE:
+					if (player->x == maze->getMaze().getWidth() - 1
+					    && player->y == maze->getMaze().getHeight() - 1) {
+						flags |= MAZE_REGEN;
+					}
+					break;
 				default:
 					break;
 			}
@@ -93,7 +99,6 @@ void GameSettings::colorSelect() {
 }
 
 void GameSettings::render() {
-	flags = 0;
 	menuBar();
 
 	if (!showSettings) {
