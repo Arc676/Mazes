@@ -6,13 +6,14 @@
 #include <SDL_scancode.h>
 
 #include "maze.h"
+#include "src/render.h"
 
 void Player::render(SDL_Renderer* const renderer,
                     const TileSettings& ts) const {
 	const int tileSize = (int)ts.tileSize;
 	const int size     = (int)ts.getHallwayWidth();
 	SDL_Rect rect{x * tileSize, y * tileSize, size, size};
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	setRenderColor(renderer, playerColor);
 	SDL_RenderFillRect(renderer, &rect);
 }
 

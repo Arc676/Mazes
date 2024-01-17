@@ -2,6 +2,7 @@
 #define MAZE_H
 
 #include <SDL2/SDL_render.h>
+#include <SDL_pixels.h>
 
 #include <functional>
 #include <type_traits>
@@ -15,6 +16,11 @@ concept MazeGenerator =
 
 class Maze {
 	Mazes::Maze maze;
+
+	// NOLINTBEGIN(*magic-numbers)
+	using Color = std::array<float, 4>;
+	Color color{1, 1, 1, 1};
+	// NOLINTEND(*magic-numbers)
 
 public:
 	Maze(unsigned w, unsigned h);

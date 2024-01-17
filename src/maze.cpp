@@ -4,6 +4,7 @@
 #include <SDL_render.h>
 
 #include "Generators/generators.h"
+#include "src/render.h"
 
 Maze::Maze(unsigned w, unsigned h)
 	: maze(w, h) {
@@ -11,7 +12,7 @@ Maze::Maze(unsigned w, unsigned h)
 }
 
 void Maze::render(SDL_Renderer* const renderer, const TileSettings& ts) const {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	setRenderColor(renderer, color);
 
 	const int tileSize = (int)ts.tileSize;
 	const int pathSize = (int)ts.getHallwayWidth();

@@ -1,6 +1,7 @@
 set(SRCS
     maze.cpp
     player.cpp
+    render.cpp
     settings.cpp
     main.cpp
     )
