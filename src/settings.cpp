@@ -109,6 +109,10 @@ void GameSettings::render() {
 		if (ImGui::CollapsingHeader("Colors")) {
 			colorSelect();
 		}
+		if (ImGui::CollapsingHeader("Traces")) {
+			ImGui::Checkbox("Show Path", &player->showPath);
+			ImGui::Checkbox("Show Backtracking", &player->showBacktrack);
+		}
 		if (ImGui::CollapsingHeader("Maze Size")) {
 			ImGui::InputScalar("Maze Width", ImGuiDataType_U32, &mazeWidth);
 			ImGui::InputScalar("Maze Height", ImGuiDataType_U32, &mazeHeight);
