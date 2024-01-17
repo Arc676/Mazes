@@ -52,11 +52,15 @@ int main() {
 	constexpr unsigned DEFAULT_MAZE_SIZE = 10;
 	constexpr float DEFAULT_WALL_RATIO   = 0.1;
 
-	GameSettings settings{DEFAULT_MAZE_SIZE, DEFAULT_MAZE_SIZE, win,
-	                      DEFAULT_WALL_RATIO};
-
-	Maze maze(settings);
+	Maze maze(DEFAULT_MAZE_SIZE, DEFAULT_MAZE_SIZE);
 	Player player;
+
+	GameSettings settings{DEFAULT_MAZE_SIZE,
+	                      DEFAULT_MAZE_SIZE,
+	                      win,
+	                      DEFAULT_WALL_RATIO,
+	                      player,
+	                      maze};
 
 	while (true) {
 		SDL_Event event;
@@ -74,7 +78,7 @@ int main() {
 		}
 		if ((flags & GameSettings::MAZE_REGEN) != 0) {
 			player.reset();
-			settings.generateMaze(maze);
+			settings.generateMaze();
 		}
 		ImGui::Render();
 

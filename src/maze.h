@@ -15,6 +15,8 @@ concept MazeGenerator =
 	std::is_convertible_v<Gen, std::function<void(Mazes::Maze&, Args...)>>;
 
 class Maze {
+	friend class GameSettings;
+
 	Mazes::Maze maze;
 
 	// NOLINTBEGIN(*magic-numbers)
@@ -24,9 +26,6 @@ class Maze {
 
 public:
 	Maze(unsigned w, unsigned h);
-
-	explicit Maze(const GameSettings& gs)
-		: Maze(gs.getWidth(), gs.getHeight()) {}
 
 	void render(SDL_Renderer* renderer, const TileSettings& ts) const;
 

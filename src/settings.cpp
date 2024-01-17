@@ -9,6 +9,7 @@
 #include "Generators/generators.h"
 #include "imgui.h"
 #include "maze.h"
+#include "player.h"
 
 void TileSettings::setSize(const unsigned size, const float wall) {
 	tileSize      = size;
@@ -21,9 +22,12 @@ unsigned TileSettings::getHallwayWidth() const {
 }
 
 GameSettings::GameSettings(const unsigned w, const unsigned h,
-                           SDL_Window* const window, const float ratio)
+                           SDL_Window* const window, const float ratio,
+                           Player& player, Maze& maze)
 	: mazeWidth(w)
-	, mazeHeight(h) {
+	, mazeHeight(h)
+	, player(&player)
+	, maze(&maze) {
 	updateTileSize(window, ratio);
 }
 
@@ -74,6 +78,20 @@ void GameSettings::menuBar() {
 	ImGui::EndMainMenuBar();
 }
 
+void GameSettings::colorSelect() {
+	if (ImGui::TreeNode("Maze Colors")) {
+		ImGui::ColorPicker3("Maze Walls", maze->color.data());
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Player Colors")) {
+		ImGui::ColorPicker3("Player Color", player->playerColor.data());
+		ImGui::ColorPicker3("Path Color", player->pathColor.data());
+		ImGui::ColorPicker3("Backtracking Color",
+		                    player->backtrackColor.data());
+		ImGui::TreePop();
+	}
+}
+
 void GameSettings::render() {
 	flags = 0;
 	menuBar();
@@ -84,12 +102,7 @@ void GameSettings::render() {
 
 	if (ImGui::Begin("Settings")) {
 		if (ImGui::CollapsingHeader("Colors")) {
-			if (ImGui::ColorPicker3("Player Color", playerColor.data())) {
-				flags |= COLORS_CHANGED;
-			}
-			if (ImGui::ColorPicker3("Maze Color", mazeColor.data())) {
-				flags |= COLORS_CHANGED;
-			}
+			colorSelect();
 		}
 		if (ImGui::CollapsingHeader("Maze Size")) {
 			ImGui::InputScalar("Maze Width", ImGuiDataType_U32, &mazeWidth);
@@ -131,15 +144,15 @@ void GameSettings::mazeGenSelect() {
 	}
 }
 
-void GameSettings::generateMaze(Maze& maze) {
+void GameSettings::generateMaze() {
 	updateTileSize(nullptr, ts.wallRatio);
-	maze.resizeMaze(mazeWidth, mazeHeight);
+	maze->resizeMaze(mazeWidth, mazeHeight);
 	switch (algo) {
 		case Generators::RANDOM_MAZE:
-			maze.regenMaze(&Generators::randomMaze);
+			maze->regenMaze(&Generators::randomMaze);
 			break;
 		case Generators::RECURSIVE_DIVISION:
-			maze.regenMaze(&Generators::recursiveDivision, minChamberSize);
+			maze->regenMaze(&Generators::recursiveDivision, minChamberSize);
 			break;
 		default:
 			break;

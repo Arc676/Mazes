@@ -13,6 +13,8 @@
 #include "src/settings.h"
 
 class Player {
+	friend class GameSettings;
+
 	int x = 0;
 	int y = 0;
 
