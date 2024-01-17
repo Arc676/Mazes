@@ -31,6 +31,8 @@ class GameSettings {
 	// render settings
 	std::array<float, 3> playerColor{0, 1, 0};
 	std::array<float, 3> mazeColor{1, 1, 1};
+	int windowWidth  = 0;
+	int windowHeight = 0;
 
 	// UI state
 	bool showSettings = false;
@@ -39,6 +41,8 @@ class GameSettings {
 	// maze generation
 	Generators::GeneratorAlgo algo = Generators::RANDOM_MAZE;
 	unsigned minChamberSize        = 1;
+
+	void updateTileSize(SDL_Window* window, float ratio);
 
 public:
 	using Flag = unsigned;
@@ -65,7 +69,7 @@ public:
 
 	[[nodiscard]] Flag getFlags() const { return flags; }
 
-	void generateMaze(Maze& maze) const;
+	void generateMaze(Maze& maze);
 
 	void processEvent(const SDL_Event* event);
 

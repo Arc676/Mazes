@@ -24,11 +24,16 @@ GameSettings::GameSettings(const unsigned w, const unsigned h,
                            SDL_Window* const window, const float ratio)
 	: mazeWidth(w)
 	, mazeHeight(h) {
-	int width  = 0;
-	int height = 0;
-	SDL_GetWindowSize(window, &width, &height);
+	updateTileSize(window, ratio);
+}
 
-	unsigned tileSize = std::min(width / w, height / h);
+void GameSettings::updateTileSize(SDL_Window* const window, const float ratio) {
+	if (window != nullptr) {
+		SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+	}
+
+	unsigned tileSize =
+		std::min(windowWidth / mazeWidth, windowHeight / mazeHeight);
 	ts.setSize(tileSize, ratio);
 }
 
@@ -86,6 +91,10 @@ void GameSettings::render() {
 				flags |= COLORS_CHANGED;
 			}
 		}
+		if (ImGui::CollapsingHeader("Maze Size")) {
+			ImGui::InputScalar("Maze Width", ImGuiDataType_U32, &mazeWidth);
+			ImGui::InputScalar("Maze Height", ImGuiDataType_U32, &mazeHeight);
+		}
 		if (ImGui::CollapsingHeader("Maze Generation")) {
 			mazeGenSelect();
 		}
@@ -122,7 +131,9 @@ void GameSettings::mazeGenSelect() {
 	}
 }
 
-void GameSettings::generateMaze(Maze& maze) const {
+void GameSettings::generateMaze(Maze& maze) {
+	updateTileSize(nullptr, ts.wallRatio);
+	maze.resizeMaze(mazeWidth, mazeHeight);
 	switch (algo) {
 		case Generators::RANDOM_MAZE:
 			maze.regenMaze(&Generators::randomMaze);
