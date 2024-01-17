@@ -8,7 +8,7 @@
 
 Maze::Maze(unsigned w, unsigned h)
 	: maze(w, h) {
-	Generators::randomMaze(maze);
+	Generators::recursiveDivision(maze);
 }
 
 void Maze::render(SDL_Renderer* const renderer, const TileSettings& ts) const {

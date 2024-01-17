@@ -42,7 +42,7 @@ class GameSettings {
 	bool showMenuBar  = false;
 
 	// maze generation
-	Generators::GeneratorAlgo algo = Generators::RANDOM_MAZE;
+	Generators::GeneratorAlgo algo = Generators::RECURSIVE_DIVISION;
 	unsigned minChamberSize        = 1;
 
 	void updateTileSize(SDL_Window* window, float ratio);
