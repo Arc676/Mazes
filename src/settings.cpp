@@ -163,6 +163,9 @@ void GameSettings::generateMaze() {
 		case Generators::RECURSIVE_DIVISION:
 			maze->regenMaze(&Generators::recursiveDivision, minChamberSize);
 			break;
+		case Generators::RANDOM_DFS:
+			maze->regenMaze(&Generators::randomDFS);
+			break;
 		default:
 			break;
 	}

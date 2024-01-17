@@ -5,10 +5,11 @@
 
 namespace Mazes {
 	using Tile                 = unsigned char;
-	constexpr Tile EMPTY       = 0U;
-	constexpr Tile RIGHT_WALL  = 0b01U;
-	constexpr Tile BOTTOM_WALL = 0b10U;
-	constexpr Tile BOTH_WALLS  = 0b11U;
+	constexpr Tile EMPTY       = 0;
+	constexpr Tile RIGHT_WALL  = 1U << 0U;
+	constexpr Tile BOTTOM_WALL = 1U << 1U;
+	constexpr Tile BOTH_WALLS  = RIGHT_WALL | BOTTOM_WALL;
+	constexpr Tile VISITED     = 1U << 2U;
 
 	class Maze {
 		using Vec = std::vector<Tile>;

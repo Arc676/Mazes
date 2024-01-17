@@ -9,6 +9,7 @@ namespace Generators {
 	enum GeneratorAlgo {
 		RANDOM_MAZE,
 		RECURSIVE_DIVISION,
+		RANDOM_DFS,
 		ALGO_MAX,
 	};
 
@@ -17,6 +18,8 @@ namespace Generators {
 	void randomMaze(Mazes::Maze& maze);
 
 	void recursiveDivision(Mazes::Maze& maze, int minSize = 1);
+
+	void randomDFS(Mazes::Maze& maze);
 }  // namespace Generators
 
 #endif
