@@ -111,7 +111,8 @@ void GameSettings::mazeGenSelect() {
 	}
 	switch (algo) {
 		case Generators::RECURSIVE_DIVISION:
-			ImGui::InputInt("Minimum chamber size", &minChamberSize);
+			ImGui::InputScalar("Minimum chamber size", ImGuiDataType_U32,
+			                   &minChamberSize);
 			break;
 		default:
 			break;
