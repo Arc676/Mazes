@@ -40,10 +40,12 @@ class GameSettings {
 	// UI state
 	bool showSettings = false;
 	bool showMenuBar  = false;
+	bool showStats    = false;
 
 	// maze generation
-	Generators::GeneratorAlgo algo = Generators::RECURSIVE_DIVISION;
-	unsigned minChamberSize        = 1;
+	Generators::GeneratorAlgo algo     = Generators::RECURSIVE_DIVISION;
+	Generators::GeneratorAlgo lastUsed = Generators::RECURSIVE_DIVISION;
+	unsigned minChamberSize            = 1;
 
 	void updateTileSize(SDL_Window* window, float ratio);
 
@@ -62,6 +64,10 @@ private:
 	void mazeGenSelect();
 
 	void colorSelect();
+
+	void renderStats() const;
+
+	void renderSettings();
 
 public:
 	GameSettings(unsigned w, unsigned h, SDL_Window* window, float ratio,

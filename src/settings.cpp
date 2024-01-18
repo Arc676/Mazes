@@ -81,6 +81,12 @@ void GameSettings::menuBar() {
 		}
 		ImGui::EndMenu();
 	}
+	if (ImGui::BeginMenu("Player")) {
+		ImGui::MenuItem("Show path", nullptr, &player->showPath);
+		ImGui::MenuItem("Show backtracking", nullptr, &player->showBacktrack);
+		ImGui::MenuItem("Show statistics", nullptr, &showStats);
+		ImGui::EndMenu();
+	}
 	ImGui::EndMainMenuBar();
 }
 
@@ -98,30 +104,55 @@ void GameSettings::colorSelect() {
 	}
 }
 
+void GameSettings::renderStats() const {
+	ImGui::Text("Maze generator: %s", Generators::algoToString(lastUsed));
+
+	const unsigned w     = maze->getMaze().getWidth();
+	const unsigned h     = maze->getMaze().getHeight();
+	const unsigned tiles = w * h;
+	ImGui::Text("Maze size: %ux%u (%u tiles)", w, h, tiles);
+
+	static constexpr double TO_PERCENT = 100;
+
+	const unsigned walked = player->path.size();
+	ImGui::Text("Path length: %u (%.02f%% of total)", walked,
+	            (double)walked / tiles * TO_PERCENT);
+	ImGui::Text("Backtracked: %zu tiles", player->backtracked.size());
+}
+
+void GameSettings::renderSettings() {
+	if (ImGui::CollapsingHeader("Colors")) {
+		colorSelect();
+	}
+	if (ImGui::CollapsingHeader("Traces")) {
+		ImGui::Checkbox("Show Path", &player->showPath);
+		ImGui::Checkbox("Show Backtracking", &player->showBacktrack);
+	}
+	if (ImGui::CollapsingHeader("Maze Size")) {
+		ImGui::InputScalar("Maze Width", ImGuiDataType_U32, &mazeWidth);
+		ImGui::InputScalar("Maze Height", ImGuiDataType_U32, &mazeHeight);
+	}
+	if (ImGui::CollapsingHeader("Maze Generation")) {
+		mazeGenSelect();
+	}
+}
+
 void GameSettings::render() {
 	menuBar();
 
-	if (!showSettings) {
-		return;
+	if (showSettings) {
+		if (ImGui::Begin("Settings")) {
+			renderSettings();
+		}
+		ImGui::End();
 	}
 
-	if (ImGui::Begin("Settings")) {
-		if (ImGui::CollapsingHeader("Colors")) {
-			colorSelect();
+	if (showStats) {
+		if (ImGui::Begin("Statistics", &showStats)) {
+			renderStats();
 		}
-		if (ImGui::CollapsingHeader("Traces")) {
-			ImGui::Checkbox("Show Path", &player->showPath);
-			ImGui::Checkbox("Show Backtracking", &player->showBacktrack);
-		}
-		if (ImGui::CollapsingHeader("Maze Size")) {
-			ImGui::InputScalar("Maze Width", ImGuiDataType_U32, &mazeWidth);
-			ImGui::InputScalar("Maze Height", ImGuiDataType_U32, &mazeHeight);
-		}
-		if (ImGui::CollapsingHeader("Maze Generation")) {
-			mazeGenSelect();
-		}
+		ImGui::End();
 	}
-	ImGui::End();
 }
 
 void GameSettings::mazeGenSelect() {
@@ -156,6 +187,7 @@ void GameSettings::mazeGenSelect() {
 void GameSettings::generateMaze() {
 	updateTileSize(nullptr, ts.wallRatio);
 	maze->resizeMaze(mazeWidth, mazeHeight);
+	lastUsed = algo;
 	switch (algo) {
 		case Generators::RANDOM_MAZE:
 			maze->regenMaze(&Generators::randomMaze);
