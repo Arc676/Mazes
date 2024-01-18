@@ -48,6 +48,9 @@ void GameSettings::processEvent(const SDL_Event* const event) {
 				case SDL_SCANCODE_ESCAPE:
 					showSettings = !showSettings;
 					break;
+				case SDL_SCANCODE_GRAVE:
+					showStats = !showStats;
+					break;
 				case SDL_SCANCODE_LALT:
 					showMenuBar = !showMenuBar;
 					break;
