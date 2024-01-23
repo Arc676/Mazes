@@ -94,6 +94,7 @@ void GameSettings::menuBar() {
 	ImGui::EndMainMenuBar();
 }
 
+// NOLINTBEGIN(*owning-memory)
 void GameSettings::saveColors() {
 	FILE* file = fopen(colorFilename.data(), "wb");
 	if (file != nullptr) {
@@ -119,6 +120,7 @@ void GameSettings::readColors() {
 		colorIO = "Failed to open file for reading";
 	}
 }
+// NOLINTEND(*owning-memory)
 
 void GameSettings::colorSelect() {
 	if (ImGui::TreeNode("Maze Colors")) {
