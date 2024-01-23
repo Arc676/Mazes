@@ -42,6 +42,10 @@ class GameSettings {
 	bool showMenuBar  = false;
 	bool showStats    = false;
 
+	constexpr static unsigned FILENAME_BUFLEN = 255;
+	std::array<char, FILENAME_BUFLEN> colorFilename{0};
+	const char* colorIO = nullptr;
+
 	// maze generation
 	Generators::GeneratorAlgo algo     = Generators::RECURSIVE_DIVISION;
 	Generators::GeneratorAlgo lastUsed = Generators::RECURSIVE_DIVISION;
@@ -68,6 +72,10 @@ private:
 	void renderStats() const;
 
 	void renderSettings();
+
+	void saveColors();
+
+	void readColors();
 
 public:
 	GameSettings(unsigned w, unsigned h, SDL_Window* window, float ratio,

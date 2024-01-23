@@ -5,6 +5,7 @@
 #include <SDL_video.h>
 
 #include <algorithm>
+#include <cstdio>
 
 #include "Generators/generators.h"
 #include "imgui.h"
@@ -93,6 +94,32 @@ void GameSettings::menuBar() {
 	ImGui::EndMainMenuBar();
 }
 
+void GameSettings::saveColors() {
+	FILE* file = fopen(colorFilename.data(), "wb");
+	if (file != nullptr) {
+		fwrite(maze->color.data(), sizeof(float), 4, file);
+		fwrite(player->playerColor.data(), sizeof(float), 4, file);
+		fwrite(player->pathColor.data(), sizeof(float), 4, file);
+		fclose(file);
+		colorIO = "Saved color scheme to file";
+	} else {
+		colorIO = "Failed to open file for writing";
+	}
+}
+
+void GameSettings::readColors() {
+	FILE* file = fopen(colorFilename.data(), "rb");
+	if (file != nullptr) {
+		fread(maze->color.data(), sizeof(float), 4, file);
+		fread(player->playerColor.data(), sizeof(float), 4, file);
+		fread(player->pathColor.data(), sizeof(float), 4, file);
+		fclose(file);
+		colorIO = "Restored color scheme from file";
+	} else {
+		colorIO = "Failed to open file for reading";
+	}
+}
+
 void GameSettings::colorSelect() {
 	if (ImGui::TreeNode("Maze Colors")) {
 		ImGui::ColorPicker3("Maze Walls", maze->color.data());
@@ -103,6 +130,20 @@ void GameSettings::colorSelect() {
 		ImGui::ColorPicker3("Path Color", player->pathColor.data());
 		ImGui::ColorPicker3("Backtracking Color",
 		                    player->backtrackColor.data());
+		ImGui::TreePop();
+	}
+	if (ImGui::TreeNode("Save/Restore Color Scheme")) {
+		ImGui::InputText("Filename", colorFilename.data(), FILENAME_BUFLEN);
+		if (ImGui::Button("Save")) {
+			saveColors();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Restore")) {
+			readColors();
+		}
+		if (colorIO != nullptr) {
+			ImGui::Text("%s", colorIO);
+		}
 		ImGui::TreePop();
 	}
 }
